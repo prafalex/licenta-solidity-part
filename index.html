@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>--</title>
+    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="cars_abi.js"></script>
+  </head>
+  <body>
+
+    <!--next to implement react inferface-->
+    <div id="cars">
+
+    </div>
+
+    <script>
+      var cars_contract;
+      var current_Account;
+
+
+      function startApp(){
+        var carsAddress = "TO BE COMPLETED";
+        cars_contract = web3js.eth.Contract(carsABI,carsAddress);
+
+        var accountInterval = setInterval(function() {
+          if (web3.eth.accounts[0] !== current_Account) {
+            current_Account = web3.eth.accounts[0];
+            CarsByOwner(current_Account).then(showCars);
+          }
+        }, 100);
+      }
+
+      function showCars(ids) {
+        $("#cars").empty();
+        for (id of ids) {
+          getCarInfo(id)
+          .then(function(car) {
+            $("#cars").append(`<div class="car">
+              <ul>
+                <li>Name: ${car.name}</li>
+                <li>Vin: ${car.vin}</li>
+              </ul>
+            </div>`);
+          });
+        }
+      }
+
+      function getCarInfo(id) {
+        return cars_contract.methods.cars(id).call()
+      }
+
+      function carToOwner(id){
+        return cars_contract.method.carToOwner(id).call();
+      }
+
+      function CarsByOwner(owner){
+        return cars_contract.method.CarsByOwner(owner).call();
+      }
+
+      // metamask default check
+      window.addEventListener("load", function () {
+        // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+        if (typeof web3 !== "undefined") {
+          // Use Mist/MetaMask's provider
+          web3js = new Web3(web3.currentProvider);
+        } else {
+          // Handle the case where the user doesn't have web3. Probably
+          // show them a message telling them to install Metamask in
+          // order to use our app.
+        }
+
+        // Now you can start your app & access web3js freely:
+        startApp();
+      });
+    </script>
+  </body>
+</html>
