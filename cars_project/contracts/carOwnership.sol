@@ -6,8 +6,9 @@ import "./erc721.sol";
 //natspec comments
 /// @title Car Games Project
 /// @author Praf Alexandru
+
 /// TO DOs :
-/// "dev" completare
+
 
 // TO DOs:
 // 1. tranfer to addres 0 fix !!
@@ -28,7 +29,6 @@ contract CarOwnership is carRace,ERC721{
     }
 
     function _transfer(address _from,address _to, uint256 _tokenId) private{
-        //safemath overflow fix
         ownerCarsNo[_from] --;
         ownerCarsNo[_to] ++;
         carToOwner[_tokenId]=_to;

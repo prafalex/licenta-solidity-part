@@ -4,7 +4,7 @@ import "./carOvertake.sol";
 
 contract CarHelper is CarOvertaking{
 
-    uint overtakeFee = 0.001 ether;
+    uint overtakeFee = 0.0001 ether;
 
     modifier ratingRequire(uint _rating,uint _id){
         require(cars[_id].rating >= _rating);

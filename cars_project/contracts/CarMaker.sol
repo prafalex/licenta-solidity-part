@@ -2,15 +2,7 @@ pragma solidity ^0.8.0 ;
 
 import "./ownable.sol";
 
-//SAFE MATH
-import "./safemath.sol";
-
-//TO DO:
-//1.Implement safemath for all ++ / -- 
-
 contract CarMaker is Ownable{
-    //overflow fix
-
     uint vin = 16 ;
     uint vinMod = 10 ** vin;
     uint stopTime = 5 hours;
@@ -42,6 +34,7 @@ contract CarMaker is Ownable{
         uint randVin = uint(keccak256(abi.encodePacked(_name)));
         return randVin % vinMod;
     }
+    
 
     function createRandCar(string memory _name) public{
         require(ownerCarsNo[msg.sender]==0);
